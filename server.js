@@ -48,7 +48,7 @@ net.createServer(function (sock) {
                     state = 2 //wait for offal select
                 }
                 else sock.write('main meat INVALID')
-                console.log('1' +order)
+                console.log('state 1 : ' +order)
                 break
             case 2:
                 let ans1 = data.toString().toLowerCase()
@@ -85,7 +85,7 @@ net.createServer(function (sock) {
                     state = 3 //wait for more option
                 }
                 else sock.write('offal INVALID')
-                console.log('2' +order)
+                console.log('state 2 : ' +order)
                 break     
             case 3:
                 try{
@@ -117,8 +117,7 @@ net.createServer(function (sock) {
                                             sock.write('sorry now preserved egg is out of stock please select orther')
                                             eggOutOfStock = true
                                         }
-                                    }
-                                    console.log(eggOutOfStock)         
+                                    }     
                                     if(eggOutOfStock) {
                                         tmp = ''
                                         break
@@ -129,7 +128,6 @@ net.createServer(function (sock) {
                                     tmp += " "
                                     tmp += egg[0]
                                     tmp += ", "
-                                    console.log(order)
                             }
                             order += tmp
                         }
@@ -141,7 +139,7 @@ net.createServer(function (sock) {
                     sock.write('more option INVALID')
                 }
 
-                console.log('3' +order)
+                console.log('state 3 : ' +order)
                 break
             case 4:
                 data = data.toString().toUpperCase()
@@ -155,7 +153,7 @@ net.createServer(function (sock) {
                     state = 5 // wait for amount
                 }
                 else sock.write('size INVALID')
-                console.log('4' +order)
+                console.log('state 4 : ' +order)
                 break
             case 5:
                 try{
@@ -169,12 +167,12 @@ net.createServer(function (sock) {
                     order = amountPorridge + " "
                     order += tmp
 
-                    sock.write("Confirm order (Yes or no)")
+                    sock.write("Confirm order (yes or no)")
                     state = 6 //wait for confirm
                 }catch(e){
                     sock.write('amount INVALID')
                 }
-                console.log('5' +order)
+                console.log('state 5 : ' +order)
                 break
             case 6:
                 data = data.toString().toLowerCase()
@@ -208,7 +206,7 @@ net.createServer(function (sock) {
                     state = 7 //wait for new order
                 }
                 else sock.write('confirm INVALID')
-                console.log('6' +order)
+                console.log('state 6 : ' +order)
                 break
             case 7:
                 data = data.toString().toLowerCase()
@@ -221,8 +219,7 @@ net.createServer(function (sock) {
                     orderList.forEach(function (od, i){
                         lastText += (i+1) + ') ' + od + '\n'
                     })
-                    sock.write("All orders are \n"
-                                +lastText)
+                    sock.write("All orders are \n" + lastText)
                     sock.end()
                 }
                 else sock.write('new order INVALID')
